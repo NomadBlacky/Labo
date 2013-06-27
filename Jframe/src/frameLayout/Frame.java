@@ -1,10 +1,13 @@
 package frameLayout;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 
-class Frame extends JFrame {
+class Frame extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -13,6 +16,10 @@ class Frame extends JFrame {
 	private static DefaultTableModel model = new DefaultTableModel(data,column);
 	private static JTable table = new JTable(model);
 	//JTableのパーツ構成
+	
+	private static JButton Button1 = new JButton("送信");
+	private static JTextField txt1 = new JTextField("");
+	private static JTextField txt2 = new JTextField("");
 	
 	private static JPanel p = new JPanel(new MigLayout(
 			"wrap 2",
@@ -23,11 +30,12 @@ class Frame extends JFrame {
 	//JTableをスクロールバーにセット
 	
 	public Frame(){
+		Button1.addActionListener(this);
 		p.add(new JLabel("名前:"),"RIGHT");
-		p.add(new JTextField(""),"span,grow");
+		p.add(txt1,"span,grow");
 		p.add(new JLabel("メッセージ:"),"RIGHT");
-		p.add(new JTextField(""),"span,grow");
-		p.add(new JButton("送信"),"span,grow");
+		p.add(txt2,"span,grow");
+		p.add(Button1,"span,grow");
 		p.add(scrollp,"span,grow");
 		//JPanelにコンポーネント配置
 	}
@@ -43,6 +51,12 @@ class Frame extends JFrame {
 		//JPanelをJFrameにのっける
 		f.setVisible(true);
 
+	}
+	public void actionPerformed(ActionEvent x){
+		model.moveRow(0, 8, 1);
+		String[] tempdata = {txt1.getText(),txt2.getText()}; 
+		model.insertRow(0, tempdata);
+		model.removeRow(1);
 	}
 
 }
