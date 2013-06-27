@@ -9,7 +9,7 @@ import net.miginfocom.swing.MigLayout;
 
 class Frame extends JFrame implements ActionListener{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
 	private static String[][] data = new String[10][2];
 	private static String[] column = {"名前","メッセージ"};
@@ -20,6 +20,7 @@ class Frame extends JFrame implements ActionListener{
 	private static JButton Button1 = new JButton("送信");
 	private static JTextField txt1 = new JTextField("");
 	private static JTextField txt2 = new JTextField("");
+	//ボタン、テキストフィールドの作成
 	
 	private static JPanel p = new JPanel(new MigLayout(
 			"wrap 2",
@@ -53,10 +54,12 @@ class Frame extends JFrame implements ActionListener{
 
 	}
 	public void actionPerformed(ActionEvent x){
+		//アクション処理
 		model.moveRow(0, 8, 1);
-		String[] tempdata = {txt1.getText(),txt2.getText()}; 
+		String[] tempdata = {txt1.getText(),txt2.getText()};
 		model.insertRow(0, tempdata);
 		model.removeRow(1);
+		//1列ずらし、データ挿入→余計なセルの削除
 	}
 
 }
