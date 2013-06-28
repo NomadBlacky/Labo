@@ -7,27 +7,28 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 
+// cmt:awtにもFrameというクラスがあるので、混同しないようクラス名を変更しましょう。
 class Frame extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 2L;
 	
-	private static String[][] data = new String[10][2];
-	private static String[] column = {"名前","メッセージ"};
-	private static DefaultTableModel model = new DefaultTableModel(data,column);
-	private static JTable table = new JTable(model);
+	private String[][] data = new String[10][2];
+	private String[] column = {"名前","メッセージ"};
+	private DefaultTableModel model = new DefaultTableModel(data,column);
+	private JTable table = new JTable(model);
 	//JTableのパーツ構成
 	
-	private static JButton Button1 = new JButton("送信");
-	private static JTextField txt1 = new JTextField("");
-	private static JTextField txt2 = new JTextField("");
+	private JButton Button1 = new JButton("送信");
+	private JTextField txt1 = new JTextField("");
+	private JTextField txt2 = new JTextField("");
 	//ボタン、テキストフィールドの作成
 	
-	private static JPanel p = new JPanel(new MigLayout(
+	private JPanel p = new JPanel(new MigLayout(
 			"wrap 2",
 			"[grow][grow][grow][grow][grow]"));
 	//JPanel作成
 	
-	private static JScrollPane scrollp = new JScrollPane(table);
+	private JScrollPane scrollp = new JScrollPane(table);
 	//JTableをスクロールバーにセット
 	
 	public Frame(){
@@ -39,7 +40,19 @@ class Frame extends JFrame implements ActionListener{
 		p.add(Button1,"span,grow");
 		p.add(scrollp,"span,grow");
 		//JPanelにコンポーネント配置
+		
+		add(p);
 	}
+	
+	public void actionPerformed(ActionEvent x){
+		//アクション処理
+		model.moveRow(0, 8, 1);
+		String[] tempdata = {txt1.getText(),txt2.getText()};
+		model.insertRow(0, tempdata);
+		model.removeRow(1);
+		//1列ずらし、データ挿入→余計なセルの削除
+	}
+
 	public static void main(String[] args) {
 		Frame f = new Frame();
 		f.setTitle("MigLayoutTest");
@@ -48,18 +61,9 @@ class Frame extends JFrame implements ActionListener{
 		f.setLocationRelativeTo(null);
 		//JFrameの設定
 
-		f.add(p);
 		//JPanelをJFrameにのっける
 		f.setVisible(true);
 
-	}
-	public void actionPerformed(ActionEvent x){
-		//アクション処理
-		model.moveRow(0, 8, 1);
-		String[] tempdata = {txt1.getText(),txt2.getText()};
-		model.insertRow(0, tempdata);
-		model.removeRow(1);
-		//1列ずらし、データ挿入→余計なセルの削除
 	}
 
 }
